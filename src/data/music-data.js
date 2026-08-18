@@ -14,6 +14,7 @@ import sceneWide13 from "../assets/bg/scene-wide-13.webp";
 import sceneWide14 from "../assets/bg/scene-wide-14.webp";
 import sceneWide15 from "../assets/bg/scene-wide-15.webp";
 import sceneWide16 from "../assets/bg/scene-wide-16.webp";
+import sceneWide17 from "../assets/bg/scene-wide-17.webp";
 
 let trackNumber = 0;
 
@@ -44,7 +45,6 @@ const track = ({
 
 const goldenNights = [
   track({
-    id: 1,
     title: {
       as: "অ’ মোৰ ৰণৰ তেজী ঘোঁৰা",
       eg: "O Mur Ronor Tejighura",
@@ -63,7 +63,6 @@ const goldenNights = [
   }),
 
   track({
-    id: 2,
     title: {
       as: "নীলিম আকাশ",
       eg: "Nilim Aakash",
@@ -82,7 +81,6 @@ const goldenNights = [
   }),
 
   track({
-    id: 3,
     title: {
       as: "নিতাল নিশা",
       eg: "Nital Nixha",
@@ -101,7 +99,6 @@ const goldenNights = [
   }),
 
   track({
-    id: 4,
     title: {
       as: "প্ৰতি দিনে তুমি",
       eg: "Protidine tumi",
@@ -122,7 +119,6 @@ const goldenNights = [
 
 const newMillennium = [
   track({
-    id: 3,
     title: {
       as: "নিতাল নিশা",
       eg: "Nital Nixha",
@@ -143,7 +139,6 @@ const newMillennium = [
 
 const goldenCollection = [
   track({
-    id: 1,
     title: {
       as: "অ’ মোৰ ৰণৰ তেজী ঘোঁৰা",
       eg: "O Mur Ronor Tejighura",
@@ -162,7 +157,25 @@ const goldenCollection = [
   }),
 ];
 
-const murPriyo = [];
+const murPriyo = [
+  track({
+    title: {
+      as: "ছায়াৰ দৰে",
+      eg: "Sayar Dore",
+    },
+    album: {
+      as: "ৰং",
+      eg: "Rang",
+    },
+    year: {
+      as: "২০০৪",
+      eg: "2004",
+    },
+    musicId: "RTJ9txbHm5Q",
+    artist: "Zubeen Garg",
+    artwork: sceneWide17,
+  }),
+];
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 export const playLists = [

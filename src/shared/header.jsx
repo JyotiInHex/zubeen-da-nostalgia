@@ -4,6 +4,8 @@ import { Playlist5, Share, SignalStream } from "reicon-react";
 import CustomTag from "./UI/tag";
 import logoUrl from "../assets/svg/Logo.svg";
 import PlaylistDrawer from "./UI/playlistDrawer";
+import { useSelector } from "react-redux";
+import ShareMenu from "./UI/shareMenu";
 
 const Header = () => {
   const [count, setCount] = useState(160);
@@ -70,7 +72,7 @@ const Header = () => {
         <img
           src={logoUrl}
           alt="Joi Zubeen Da"
-          className="w-55 h-fit object-contain drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)] brightness-110"
+          className="w-70 h-fit object-contain drop-shadow-[0_2px_8px_rgba(0,0,0,0.6)] brightness-110"
         />
       </figure>
 
@@ -105,17 +107,14 @@ const Header = () => {
           }
         />
 
-        <CustomTag
-          value={"Share"}
-          // onClick={() =>
-          //   window.open(
-          //     "https://music.youtube.com/",
-          //     "_blank",
-          //     "noopener,noreferrer",
-          //   )
-          // }
-          className={"cursor-pointer"}
-          children={<Share size={18} width={"filled"} color="white" />}
+        <ShareMenu
+          trigger={
+            <CustomTag
+              value={"Share"}
+              className={"cursor-pointer"}
+              children={<Share size={18} width={"filled"} color="white" />}
+            />
+          }
         />
       </div>
     </header>

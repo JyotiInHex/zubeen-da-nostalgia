@@ -8,8 +8,6 @@ const App = () => {
   const { playList, currentIndex } = useSelector((state) => state.player);
   const currentSong = playList[currentIndex];
 
-  console.log(playList)
-
   const bgImage = currentSong?.artwork || defaultBg;
 
   return (

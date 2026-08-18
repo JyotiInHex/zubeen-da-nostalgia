@@ -14,7 +14,12 @@ import {
   setIsPlaying,
   setCurrentTime,
   setDuration,
+  setCurrentPlaylist,
 } from "../../../store/slices/playListSlice";
+import { playLists } from "@/data/music-data";
+
+import vinyl from "../../../assets/img/vinyl-disc.png";
+import NextSong from "./next-song";
 
 const MusicPlayer = () => {
   const dispatch = useDispatch();
@@ -29,6 +34,45 @@ const MusicPlayer = () => {
     useSelector((state) => state.player);
 
   const currentSong = playList[currentIndex];
+  const nextSong =
+    playList.length > 1 ? playList[(currentIndex + 1) % playList.length] : null;
+
+  const upcomingSongs = playList.length
+    ? Array.from(
+        { length: Math.min(playList.length - 1, 3) },
+        (_, i) => playList[(currentIndex + i + 1) % playList.length],
+      )
+    : [];
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+
+    const songId = params.get("song");
+    const playlistId = params.get("playlist");
+
+    if (playlistId) {
+      // handle playlist later
+    }
+
+    if (songId) {
+      for (const playlist of playLists) {
+        const index = playlist.tracks.findIndex(
+          (track) => track.musicId === songId,
+        );
+
+        if (index !== -1) {
+          dispatch(setCurrentPlaylist(playlist.id));
+
+          dispatch(setCurrentIndex(index));
+
+          // Shared links must start paused.
+          dispatch(setIsPlaying(false));
+
+          return;
+        }
+      }
+    }
+  }, [dispatch]);
 
   const remainTime = Math.max(0, (duration || 0) - (currentTime || 0));
 
@@ -104,13 +148,24 @@ const MusicPlayer = () => {
   };
 
   const togglePlay = () => {
-    if (!playerRef.current) return;
+    const player = playerRef.current;
 
-    if (isPlaying) {
-      playerRef.current.pauseVideo();
-    } else {
-      playerRef.current.playVideo();
+    if (!player) return;
+
+    const playerState = player.getPlayerState();
+
+    if (playerState === 1) {
+      player.pauseVideo();
+      return;
     }
+
+    if (playerState === 0) {
+      player.seekTo(0, true);
+      player.playVideo();
+      return;
+    }
+
+    player.playVideo();
   };
 
   const handlePrevious = () => {
@@ -129,7 +184,10 @@ const MusicPlayer = () => {
   };
 
   const handleNext = () => {
-    if (!playList.length) return;
+    if (!playList.length) {
+      dispatch(setIsPlaying(false));
+      return;
+    }
 
     let nextIndex;
 
@@ -169,6 +227,31 @@ const MusicPlayer = () => {
   const progress =
     duration > 0 ? Math.min((currentTime / duration) * 100, 100) : 0;
 
+  const [rotation, setRotation] = useState(0);
+
+  useEffect(() => {
+    if (!isPlaying) return;
+
+    const rpm = 33.333;
+    const degreesPerSecond = (rpm * 360) / 60;
+
+    let animationFrame;
+    let lastTime = performance.now();
+
+    const animate = (now) => {
+      const delta = (now - lastTime) / 1000;
+      lastTime = now;
+
+      setRotation((prev) => (prev + degreesPerSecond * delta) % 360);
+
+      animationFrame = requestAnimationFrame(animate);
+    };
+
+    animationFrame = requestAnimationFrame(animate);
+
+    return () => cancelAnimationFrame(animationFrame);
+  }, [isPlaying]);
+
   if (!currentSong) {
     return (
       <section className="relative w-full h-full flex flex-col justify-end text-white select-none">
@@ -187,7 +270,7 @@ const MusicPlayer = () => {
       </section>
     );
   }
-  
+
   return (
     <section className="relative flex flex-col justify-end w-full h-fit overflow-hidden text-white">
       <div className="pointer-events-none absolute -left-2499.75 top-0 h-50 w-50 overflow-hidden opacity-0">
@@ -200,7 +283,7 @@ const MusicPlayer = () => {
         />
       </div>
 
-      <div className="grid grid-cols-[1fr_40%] mt-auto h-full pb-20">
+      <div className="relative  grid grid-cols-[1fr_40%] mt-auto h-full pb-20">
         <div className="relative z-10 flex min-h-130 flex-col p-6 sm:p-8 lg:p-10">
           <div className="mt-auto pb-16">
             <SlideInText
@@ -247,7 +330,25 @@ const MusicPlayer = () => {
           </div>
         </div>
 
-        <div>HI</div>
+        <div className="relative flex items-center justify-end p-6 overflow-hidden ">
+          {/* <figure className="absolute w-64 h-64 sm:w-80 sm:h-80 xl:w-175 xl:h-175 shrink-0 drop-shadow-2xl translate-x-75">
+            <img
+              src={vinyl}
+              alt="vinyl"
+              className="w-full h-full object-contain rounded-full "
+              style={{
+                transform: `rotate(${rotation}deg)`,
+                willChange: "transform",
+              }}
+            />
+          </figure> */}
+
+          <NextSong
+            songs={upcomingSongs}
+            remainTime={`${remainMinute}:${remainSecond}`}
+            onPlay={handleNext}
+          />
+        </div>
       </div>
     </section>
   );
