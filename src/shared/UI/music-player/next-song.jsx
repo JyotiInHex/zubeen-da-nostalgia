@@ -16,12 +16,10 @@ const NextSong = ({ songs = [], onPlay, remainTime }) => {
 
   if (!songs.length) return null;
 
-  const stack = songs.slice(0, 4);
-
   return (
     <div className="absolute right-6 bottom-6 z-30 h-32 w-98">
       <AnimatePresence initial={false}>
-        {stack.map((song, index) => {
+        {songs.map((song, index) => {
           const { title, album, year, artwork } = getSongData(song);
           const isFront = index === 0;
 
@@ -40,11 +38,11 @@ const NextSong = ({ songs = [], onPlay, remainTime }) => {
               exit={{
                 x: -260,
                 y: -30,
-                rotate: 12,
+                rotate: 22,
                 opacity: 0,
                 scale: 0.65,
                 transition: {
-                  duration: 0.67,
+                  duration: 0.37,
                   ease: [0.32, 0, 0.67, 0],
                 },
               }}

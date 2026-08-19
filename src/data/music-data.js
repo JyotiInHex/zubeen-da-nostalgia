@@ -115,49 +115,247 @@ const goldenNights = [
     artist: "Zubeen Garg",
     artwork: sceneWide4,
   }),
+
+  track({
+    title: {
+      as: "ইপাৰ সিপাৰ",
+      eg: "Epar Hipar",
+    },
+    album: {
+      as: "ইপাৰ সিপাৰ",
+      eg: "Epar Hipar ",
+    },
+    year: {
+      as: "২০২৩",
+      eg: "2023",
+    },
+    musicId: "p4-fx6rvz1U",
+    artist: "Zubeen Garg",
+    artwork: sceneWide8,
+  }),
+
+  track({
+    title: {
+      as: "বিয়পি বিয়পি",
+      eg: "Biyopi Biyopi",
+    },
+    album: {
+      as: "প্ৰেম আৰু প্ৰেম",
+      eg: "Prem Aru Prem",
+    },
+    year: {
+      as: "২০২৩",
+      eg: "2023",
+    },
+    musicId: "Sjc2pPsJ724",
+    artist: "Zubeen Garg",
+    artwork: sceneWide1,
+  }),
+
+  track({
+    title: {
+      as: "মমৰ শিখাতি",
+      eg: "Momor Hikhati",
+    },
+    album: {
+      as: "মমৰ শিখাতি",
+      eg: "Momor Hikhati",
+    },
+    year: {
+      as: "২০২৪",
+      eg: "2024",
+    },
+    musicId: "MWZO41AOuOw",
+    artist: "Zubeen Garg",
+    artwork: sceneWide14,
+  }),
 ];
 
 const newMillennium = [
   track({
     title: {
-      as: "নিতাল নিশা",
-      eg: "Nital Nixha",
+      as: "সপোন সপোন",
+      eg: "Xopun Xopun",
     },
     album: {
-      as: "সন্ধ্যা",
-      eg: "Sandhya ",
+      as: "ৰৈ ৰৈ বিনালে",
+      eg: "Roi Roi Binale",
     },
     year: {
-      as: "২০০৬",
-      eg: "2006",
+      as: "২০২৫",
+      eg: "2025",
     },
-    musicId: "JKT7-G1l-SA",
+    musicId: "9YKVapl8a3M",
     artist: "Zubeen Garg",
-    artwork: sceneWide3,
+    artwork: sceneWide12,
+  }),
+
+  track({
+    title: {
+      as: "ৰৈ ৰৈ বিনালে",
+      eg: "Roi Roi Binale",
+    },
+    album: {
+      as: "ৰৈ ৰৈ বিনালে",
+      eg: "Roi Roi Binale",
+    },
+    year: {
+      as: "২০২৫",
+      eg: "2025",
+    },
+    musicId: "QxUg1fLsiUA",
+    artist: "Zubeen Garg",
+    artwork: sceneWide15,
+  }),
+
+  track({
+    title: {
+      as: "মোৰ মন",
+      eg: "Mur Mon",
+    },
+    album: {
+      as: "ৰৈ ৰৈ বিনালে",
+      eg: "Roi Roi Binale",
+    },
+    year: {
+      as: "২০২৫",
+      eg: "2025",
+    },
+    musicId: "SU6McXo-K6E",
+    artist: "Zubeen Garg",
+    artwork: sceneWide13,
+  }),
+
+  track({
+    title: {
+      as: "জোন জ্বলি",
+      eg: "Joon Jwoli",
+    },
+    album: {
+      as: "ৰৈ ৰৈ বিনালে",
+      eg: "Roi Roi Binale",
+    },
+    year: {
+      as: "২০২৫",
+      eg: "2025",
+    },
+    musicId: "mx2ZGYxEeMQ",
+    artist: "Zubeen Garg",
+    artwork: sceneWide9,
+  }),
+
+  track({
+    title: {
+      as: "বাটৰে শেযতে",
+      eg: "Batore Hekhote",
+    },
+    album: {
+      as: "বাটৰে শেযতে",
+      eg: "Batore Hekhote",
+    },
+    year: {
+      as: "২০২৫",
+      eg: "2025",
+    },
+    musicId: "8mIvwOLbe6I",
+    artist: "Zubeen Garg",
+    artwork: sceneWide14,
+  }),
+
+  track({
+    title: {
+      as: "সাতোৰঙী",
+      eg: "Xaturangi",
+    },
+    album: {
+      as: "চিকাৰ",
+      eg: "Sikaar",
+    },
+    year: {
+      as: "২০২৪",
+      eg: "2024",
+    },
+    musicId: "zAyYhVensAM",
+    artist: "Zubeen Garg",
+    artwork: sceneWide9,
   }),
 ];
 
 const goldenCollection = [
   track({
     title: {
-      as: "অ’ মোৰ ৰণৰ তেজী ঘোঁৰা",
-      eg: "O Mur Ronor Tejighura",
+      as: "এন্ধাৰ হ'ব নোৱাৰো",
+      eg: "Endhar Hobo Nuwaru",
     },
     album: {
-      as: "বৰষুণ",
-      eg: "Borokhun",
+      as: "আশা",
+      eg: "Aasha",
     },
     year: {
-      as: "২০১৮",
-      eg: "2018",
+      as: "১৯৯৫",
+      eg: "1995",
     },
-    musicId: "OtJ6Vmd3LLc",
+    musicId: "cYXVtPiPERg",
     artist: "Zubeen Garg",
-    artwork: sceneWide1,
+    artwork: sceneWide14,
+  }),
+
+  track({
+    title: {
+      as: "আশা",
+      eg: "Aasha",
+    },
+    album: {
+      as: "আশা",
+      eg: "Aasha",
+    },
+    year: {
+      as: "১৯৯৫",
+      eg: "1995",
+    },
+    musicId: "10KiRvcYOzM",
+    artist: "Zubeen Garg",
+    artwork: sceneWide7,
+  }),
+
+  track({
+    title: {
+      as: "এতিয়া জোনাকে",
+      eg: "Etia Junake",
+    },
+    album: {
+      as: "শব্দ",
+      eg: "Sobdo",
+    },
+    year: {
+      as: "১৯৯৮",
+      eg: "1998",
+    },
+    musicId: "4vgDLxR-9iQ",
+    artist: "Zubeen Garg",
+    artwork: sceneWide8,
   }),
 ];
 
 const murPriyo = [
+  track({
+    title: {
+      as: "অহেতুক",
+      eg: "Ahetuk",
+    },
+    album: {
+      as: "অহেতুক",
+      eg: "Ahetuk",
+    },
+    year: {
+      as: "২০১৪",
+      eg: "2014",
+    },
+    musicId: "95fpJlktj7k",
+    artist: "Zubeen Garg",
+    artwork: sceneWide15,
+  }),
+
   track({
     title: {
       as: "ছায়াৰ দৰে",
@@ -175,6 +373,42 @@ const murPriyo = [
     artist: "Zubeen Garg",
     artwork: sceneWide17,
   }),
+
+  track({
+    title: {
+      as: "উভতি চোৱা",
+      eg: "Ubhoti Suwa",
+    },
+    album: {
+      as: "চিলা",
+      eg: "Sila",
+    },
+    year: {
+      as: "২০২০",
+      eg: "2020",
+    },
+    musicId: "5EJCNtWr2UI",
+    artist: "Zubeen Garg",
+    artwork: sceneWide13,
+  }),
+
+  track({
+    title: {
+      as: "চিলা",
+      eg: "Silaa",
+    },
+    album: {
+      as: "চিলা",
+      eg: "Silaa",
+    },
+    year: {
+      as: "২০২০",
+      eg: "2020",
+    },
+    musicId: "XrAcwz0_0vM",
+    artist: "Zubeen Garg",
+    artwork: sceneWide14,
+  }),
 ];
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
@@ -188,7 +422,7 @@ export const playLists = [
   {
     id: "new-millennium",
     name: "নতুন সহস্ৰাব্দ",
-    year: "২০১০ – ২০২৫",
+    year: "২০২০ – ২০২৫",
     tracks: newMillennium,
   },
   {
@@ -203,10 +437,10 @@ export const playLists = [
     year: "২০০২ – ২০২৬",
     tracks: murPriyo,
   },
-  {
-    id: "tumi-heartthrob",
-    name: "তুমি হাৰ্টথ্ৰব",
-    year: "১৯৯২ – ২০২৬",
-    tracks: goldenCollection,
-  },
+  // {
+  //   id: "eucalyptus",
+  //   name: "ইউকেলিপ্টাছ",
+  //   year: "২০০০ – ২০২৬",
+  //   tracks: goldenCollection,
+  // },
 ];

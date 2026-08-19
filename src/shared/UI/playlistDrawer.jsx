@@ -16,9 +16,12 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer";
 import SlideInText from "../motion/SlideInText";
+import useDeviceDetect from "@/hooks/useDeviceDetect";
 
 const PlaylistDrawer = ({ trigger }) => {
   const dispatch = useDispatch();
+
+  const { isMobile } = useDeviceDetect();
 
   const [open, setOpen] = useState(false);
 
@@ -30,15 +33,28 @@ const PlaylistDrawer = ({ trigger }) => {
   };
 
   return (
-    <Drawer swipeDirection="right" open={open} onOpenChange={setOpen}>
+    <Drawer
+      key={isMobile ? "drawer-mobile" : "drawer-desktop"}
+      swipeDirection={isMobile ? "down" : "right"}
+      open={open}
+      onOpenChange={setOpen}
+    >
       <DrawerTrigger asChild className="outline-0!">
         {trigger}
       </DrawerTrigger>
 
       <DrawerContent
-        className={`fixed! left-auto! right-4! top-5! bottom-5! h-auto! w-100! max-w-[calc(100vw-40px)]! rounded-[28px]! border! border-white/10! bg-black/55! p-0! text-white! shadow-2xl! backdrop-blur-2xl! outline-0! overflow-hidden ${!open && "opacity-0 transition-all"}`}
+        className={`fixed z-50 overflow-hidden border border-white/10 bg-black/60 text-white shadow-2xl backdrop-blur-2xl outline-none transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] ${
+          isMobile
+            ? "inset-x-0 bottom-0 max-h-[85vh] rounded-t-[28px]"
+            : "inset-y-4! right-4! left-auto top-4 bottom-4 h-[calc(100vh-32px)] w-105 max-w-[calc(100vw-32px)] rounded-[28px]!"
+        }`}
       >
-        <div className="px-2 h-full flex flex-col">
+        {isMobile && (
+          <div className="mx-auto mt-3 h-1.5 w-12 rounded-full bg-white/20" />
+        )}
+
+        <div className="flex h-full max-h-full flex-col min-h-0 overflow-hidden px-2">
           <DrawerHeader className="px-6 pt-6 text-left select-none!">
             <DrawerTitle className="text-2xl font-bold font-Noto-Serif tracking-tight text-white">
               প্লেলিষ্ট
@@ -48,7 +64,7 @@ const PlaylistDrawer = ({ trigger }) => {
             </DrawerDescription>
           </DrawerHeader>
 
-          <div className="mt-4 h-full space-y-3 overflow-y-auto px-3 pb-5 scrollbar-none">
+          <div className="scrollbar-none! flex-1 min-h-0 space-y-3 overflow-y-auto overscroll-contain px-3 py-3">
             {playLists.map((playList) => {
               const isActive = currentPlaylistId === playList.id;
 

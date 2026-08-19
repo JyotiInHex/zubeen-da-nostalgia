@@ -18,6 +18,7 @@ import {
   Turntable,
 } from "reicon-react";
 import { playLists } from "@/data/music-data";
+import useDeviceDetect from "@/hooks/useDeviceDetect";
 
 const ShareMenu = ({ trigger, className }) => {
   const [open, setOpen] = useState(false);
@@ -25,6 +26,8 @@ const ShareMenu = ({ trigger, className }) => {
   const [isBusy, setIsBusy] = useState(false);
 
   const isSharingRef = useRef(false);
+
+  const { isDesktop, isMobile, isTablet } = useDeviceDetect();
 
   const { playList, currentIndex, currentPlaylistId, isPlaying } = useSelector(
     (state) => state.player,
@@ -117,7 +120,10 @@ const ShareMenu = ({ trigger, className }) => {
   const shareCurrentSong = () => {
     const url = createSongUrl();
 
-    if (!currentSong || !url) return;
+    if (!currentSong || !url) {
+      console.log("Something missing!!");
+      return;
+    }
 
     const songTitle = currentSong.title?.as || "Untitled Track";
     const albumName = currentSong.album?.as || currentSong.album?.eg;
@@ -171,13 +177,13 @@ const ShareMenu = ({ trigger, className }) => {
   };
 
   return (
-    <DropdownMenu open={open} onOpenChange={setOpen}>
+    <DropdownMenu open={open} onOpenChange={setOpen} modal={false}>
       <DropdownMenuTrigger asChild>{trigger}</DropdownMenuTrigger>
 
       <DropdownMenuContent
-        align="end"
         sideOffset={10}
-        className="relative z-9999 w-84 rounded-3xl border border-white/10 bg-black/55 outline-0 overflow-hidden p-2 text-white shadow-2xl backdrop-blur-2xl"
+        align={isDesktop ? "end" : isMobile ? "center" : "end"}
+        className="relative z-9999 w-84 rounded-3xl border border-white/10 bg-black/55 overflow-hidden p-2 text-white shadow-2xl backdrop-blur-2xl"
       >
         <DropdownMenuGroup>
           <DropdownMenuLabel className="text-lg text-white font-poppins font-medium">
@@ -190,7 +196,9 @@ const ShareMenu = ({ trigger, className }) => {
               className="group cursor-pointer rounded-xl px-3 py-3 text-white bg-black/34"
               title={`${currentSong?.title?.as} • ${currentSong?.album?.as}`}
             >
-              <MusicNotes className={`mr-3 size-6 text-amber-400 ${isPlaying && "animate-bounce"}`} />
+              <MusicNotes
+                className={`mr-3 size-6 text-amber-400 ${isPlaying && "animate-bounce"}`}
+              />
 
               <div className="min-w-0 flex-1">
                 <p className="text-xs text-white/60 font-semibold">

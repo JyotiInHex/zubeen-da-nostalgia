@@ -1,11 +1,12 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import YouTube from "react-youtube";
 import { formatTime } from "@/lib/formater";
 import { useDispatch, useSelector } from "react-redux";
 
 import SlideInText from "@/shared/motion/SlideInText";
 import SongTitle from "@/shared/motion/BlurInText";
-
+import { playLists } from "@/data/music-data";
+import NextSong from "./next-song";
 import MusicControllers from "./controller";
 import AudioProgressBar from "./progressBar";
 
@@ -16,33 +17,66 @@ import {
   setDuration,
   setCurrentPlaylist,
 } from "../../../store/slices/playListSlice";
-import { playLists } from "@/data/music-data";
-
-import vinyl from "../../../assets/img/vinyl-disc.png";
-import NextSong from "./next-song";
+import useDeviceDetect from "@/hooks/useDeviceDetect";
+import { createShuffledQueue } from "@/lib/helper";
 
 const MusicPlayer = () => {
   const dispatch = useDispatch();
+
   const playerRef = useRef(null);
   const progressTimerRef = useRef(null);
 
-  const [isShuffle, setIsShuffle] = useState(false);
-  const [isRepeat, setIsRepeat] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
+  const [isRepeat, setIsRepeat] = useState(false);
+  const [isShuffle, setIsShuffle] = useState(false);
+  const [shuffledQueue, setShuffledQueue] = useState([]);
+
+  const { isDesktop, isMobile, isTablet } = useDeviceDetect();
 
   const { playList, currentIndex, isPlaying, currentTime, duration } =
     useSelector((state) => state.player);
 
-  const currentSong = playList[currentIndex];
-  const nextSong =
-    playList.length > 1 ? playList[(currentIndex + 1) % playList.length] : null;
+  const youtubeOptions = {
+    width: "200",
+    height: "200",
 
-  const upcomingSongs = playList.length
-    ? Array.from(
-        { length: Math.min(playList.length - 1, 3) },
-        (_, i) => playList[(currentIndex + i + 1) % playList.length],
-      )
-    : [];
+    playerVars: {
+      fs: 0,
+      rel: 0,
+      controls: 0,
+      autoplay: isPlaying ? 1 : 0,
+      disablekb: 1,
+      playsinline: 1,
+    },
+  };
+
+  const currentSong = playList[currentIndex];
+
+  const upcomingSongs = useMemo(() => {
+    if (!playList || playList.length <= 1) return [];
+
+    if (isShuffle) {
+      return shuffledQueue
+        .slice(0, Math.min(shuffledQueue.length, 5))
+        .map((idx) => playList[idx]);
+    }
+
+    return Array.from(
+      { length: Math.min(playList.length - 1, 5) },
+      (_, i) => playList[(currentIndex + i + 1) % playList.length],
+    );
+  }, [playList, currentIndex, isShuffle, shuffledQueue]);
+
+  const remainTime = Math.max(0, (duration || 0) - (currentTime || 0));
+  const { m: currentMinute, s: currentSecond } = formatTime(currentTime);
+  const { m: remainMinute, s: remainSecond } = formatTime(remainTime);
+
+  const progress =
+    duration > 0 ? Math.min((currentTime / duration) * 100, 100) : 0;
+
+  useEffect(() => {
+    return () => stopProgressTimer();
+  }, []);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -51,7 +85,32 @@ const MusicPlayer = () => {
     const playlistId = params.get("playlist");
 
     if (playlistId) {
-      // handle playlist later
+      const targetPlaylist = playLists.find(
+        (playlist) => playlist.id === playlistId,
+      );
+
+      if (targetPlaylist && targetPlaylist.tracks.length > 0) {
+        dispatch(setCurrentPlaylist(targetPlaylist.id));
+
+        let trackIndex = 0;
+
+        if (songId) {
+          console.log(songId);
+
+          const foundIndex = targetPlaylist.tracks.findIndex(
+            (track) => track.musicId === songId,
+          );
+
+          if (foundIndex !== -1) {
+            trackIndex = foundIndex;
+          }
+        }
+
+        dispatch(setCurrentIndex(trackIndex));
+        dispatch(setIsPlaying(false));
+
+        return;
+      }
     }
 
     if (songId) {
@@ -65,7 +124,6 @@ const MusicPlayer = () => {
 
           dispatch(setCurrentIndex(index));
 
-          // Shared links must start paused.
           dispatch(setIsPlaying(false));
 
           return;
@@ -74,24 +132,31 @@ const MusicPlayer = () => {
     }
   }, [dispatch]);
 
-  const remainTime = Math.max(0, (duration || 0) - (currentTime || 0));
+  useEffect(() => {
+    if (!currentSong?.musicId) return;
 
-  const { m: currentMinute, s: currentSecond } = formatTime(currentTime);
-  const { m: remainMinute, s: remainSecond } = formatTime(remainTime);
+    dispatch(setCurrentTime(0));
+    dispatch(setDuration(0));
+    setIsLiked(false);
+  }, [currentSong?.musicId]);
 
-  const youtubeOptions = {
-    width: "200",
-    height: "200",
+  useEffect(() => {
+    if (isShuffle && playList?.length > 1) {
+      setShuffledQueue((prevQueue) => {
+        const filtered = prevQueue.filter(
+          (idx) => idx !== currentIndex && idx < playList.length,
+        );
 
-    playerVars: {
-      fs: 0,
-      rel: 0,
-      controls: 0,
-      autoplay: 0,
-      disablekb: 1,
-      playsinline: 1,
-    },
-  };
+        if (filtered.length === 0) {
+          return createShuffledQueue(playList.length, currentIndex);
+        }
+
+        return filtered;
+      });
+    } else {
+      setShuffledQueue([]);
+    }
+  }, [isShuffle, playList?.length, currentIndex]);
 
   const startProgressTimer = () => {
     stopProgressTimer();
@@ -113,10 +178,6 @@ const MusicPlayer = () => {
       progressTimerRef.current = null;
     }
   };
-
-  useEffect(() => {
-    return () => stopProgressTimer();
-  }, []);
 
   const handleReady = (event) => {
     playerRef.current = event.target;
@@ -143,6 +204,21 @@ const MusicPlayer = () => {
 
     if (event.data === 0) {
       stopProgressTimer();
+
+      if (isRepeat) {
+        if (playerRef.current) {
+          playerRef.current.seekTo(0, true);
+          playerRef.current.playVideo();
+        }
+        return;
+      }
+
+      if (playList.length <= 1 && currentIndex === playList.length - 1) {
+        dispatch(setCurrentTime(0));
+        dispatch(setIsPlaying(false));
+        return;
+      }
+
       handleNext();
     }
   };
@@ -194,9 +270,14 @@ const MusicPlayer = () => {
     if (isRepeat) {
       nextIndex = currentIndex;
     } else if (isShuffle && playList.length > 1) {
-      do {
-        nextIndex = Math.floor(Math.random() * playList.length);
-      } while (nextIndex === currentIndex);
+      if (shuffledQueue.length > 0) {
+        nextIndex = shuffledQueue[0];
+        setShuffledQueue((prev) => prev.slice(1));
+      } else {
+        const freshQueue = createShuffledQueue(playList.length, currentIndex);
+        nextIndex = freshQueue[0] ?? 0;
+        setShuffledQueue(freshQueue.slice(1));
+      }
     } else {
       nextIndex = (currentIndex + 1) % playList.length;
     }
@@ -205,14 +286,6 @@ const MusicPlayer = () => {
     dispatch(setIsPlaying(true));
     setIsLiked(false);
   };
-
-  useEffect(() => {
-    if (!currentSong?.musicId) return;
-
-    dispatch(setCurrentTime(0));
-    dispatch(setDuration(0));
-    setIsLiked(false);
-  }, [currentSong?.musicId]);
 
   const handleSeek = (event) => {
     const value = Number(event.target.value);
@@ -223,34 +296,6 @@ const MusicPlayer = () => {
       playerRef.current.seekTo(value, true);
     }
   };
-
-  const progress =
-    duration > 0 ? Math.min((currentTime / duration) * 100, 100) : 0;
-
-  const [rotation, setRotation] = useState(0);
-
-  useEffect(() => {
-    if (!isPlaying) return;
-
-    const rpm = 33.333;
-    const degreesPerSecond = (rpm * 360) / 60;
-
-    let animationFrame;
-    let lastTime = performance.now();
-
-    const animate = (now) => {
-      const delta = (now - lastTime) / 1000;
-      lastTime = now;
-
-      setRotation((prev) => (prev + degreesPerSecond * delta) % 360);
-
-      animationFrame = requestAnimationFrame(animate);
-    };
-
-    animationFrame = requestAnimationFrame(animate);
-
-    return () => cancelAnimationFrame(animationFrame);
-  }, [isPlaying]);
 
   if (!currentSong) {
     return (
@@ -283,14 +328,23 @@ const MusicPlayer = () => {
         />
       </div>
 
-      <div className="relative  grid grid-cols-[1fr_40%] mt-auto h-full pb-20">
-        <div className="relative z-10 flex min-h-130 flex-col p-6 sm:p-8 lg:p-10">
-          <div className="mt-auto pb-16">
+      <div
+        className={`relative grid h-full pb-20 ${isDesktop ? "grid-cols-[1fr_40%]" : "grid-cols-1"}`}
+      >
+        <div
+          className={`relative z-10 flex min-h-130 flex-col p-6 sm:p-8 lg:p-10 ${isDesktop ? "mt-auto" : "justify-center"}`}
+        >
+          <div className={`${isDesktop ? "mt-auto" : ""}`}>
             <SlideInText
               text={`এতিয়া শুনি আছে • ${currentSong.album.as} • ${currentSong.year.as}`}
+              className={`${isDesktop ? "text-3xl pb-7  " : isTablet ? "text-2xl pb-4" : "text-lg pb-3"}`}
             />
 
-            <SongTitle currentSong={currentSong} />
+            <SongTitle
+              currentSong={currentSong}
+              isLiked={isLiked}
+              setIsLiked={setIsLiked}
+            />
           </div>
 
           <MusicControllers
@@ -302,17 +356,9 @@ const MusicPlayer = () => {
             handleNext={handleNext}
             isRepeat={isRepeat}
             setIsRepeat={setIsRepeat}
-            isLiked={isLiked}
-            setIsLiked={setIsLiked}
           />
 
-          <div className="flex items-center gap-3">
-            <h5 className="w-fit shrink-0 text-3xl font-Doto font-black tabular-nums text-white/85">
-              {currentMinute}
-              <span className="animate-pulse-fast inline-block mx-px">:</span>
-              {currentSecond}
-            </h5>
-
+          <div className={`flex flex-col items-center`}>
             <AudioProgressBar
               progress={progress}
               currentTime={currentTime}
@@ -322,33 +368,35 @@ const MusicPlayer = () => {
               formatTime={formatTime}
             />
 
-            <h5 className="w-fit shrink-0 text-3xl font-Doto font-black tabular-nums text-white/85">
-              {remainMinute}
-              <span className="animate-pulse-fast inline-block mx-px">:</span>
-              {remainSecond}
-            </h5>
+            <div className="flex items-center justify-between w-full">
+              <h5
+                className={`w-fit shrink-0 font-Doto font-black tabular-nums text-white drop-shadow-sm drop-shadow-black ${isDesktop ? "text-3xl" : isRepeat ? "text-2xl" : "text-xl"}`}
+              >
+                {currentMinute}
+                <span className="animate-pulse-fast inline-block mx-px">:</span>
+                {currentSecond}
+              </h5>
+
+              <h5
+                className={`w-fit shrink-0 font-Doto font-black tabular-nums text-white drop-shadow-sm drop-shadow-black ${isDesktop ? "text-3xl" : isRepeat ? "text-2xl" : "text-xl"}`}
+              >
+                {remainMinute}
+                <span className="animate-pulse-fast inline-block mx-px">:</span>
+                {remainSecond}
+              </h5>
+            </div>
           </div>
         </div>
 
-        <div className="relative flex items-center justify-end p-6 overflow-hidden ">
-          {/* <figure className="absolute w-64 h-64 sm:w-80 sm:h-80 xl:w-175 xl:h-175 shrink-0 drop-shadow-2xl translate-x-75">
-            <img
-              src={vinyl}
-              alt="vinyl"
-              className="w-full h-full object-contain rounded-full "
-              style={{
-                transform: `rotate(${rotation}deg)`,
-                willChange: "transform",
-              }}
+        {isDesktop && (
+          <div className="relative">
+            <NextSong
+              songs={upcomingSongs}
+              remainTime={`${remainMinute}:${remainSecond}`}
+              onPlay={handleNext}
             />
-          </figure> */}
-
-          <NextSong
-            songs={upcomingSongs}
-            remainTime={`${remainMinute}:${remainSecond}`}
-            onPlay={handleNext}
-          />
-        </div>
+          </div>
+        )}
       </div>
     </section>
   );

@@ -33,7 +33,7 @@ const SlideInText = ({ text = "", className }) => {
             duration: 0.3,
             ease: "easeOut",
           }}
-          className={`inline-block font-bilingual-Byomgraphy ${className}`}
+          className={`inline-block font-bilingual-Byomgraphy drop-shadow-md drop-shadow-black/75 ${className}`}
         >
           {char === " " ? "\u00A0" : char}
         </motion.span>

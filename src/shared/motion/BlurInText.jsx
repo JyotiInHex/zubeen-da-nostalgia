@@ -1,5 +1,7 @@
 import { motion } from "framer-motion";
 import SlideInText from "./SlideInText";
+import useDeviceDetect from "@/hooks/useDeviceDetect";
+import LikeButton from "../UI/likeButton";
 
 export const BlurInText = ({ text = "" }) => {
   const segmenter = new Intl.Segmenter("as", {
@@ -13,7 +15,7 @@ export const BlurInText = ({ text = "" }) => {
 
   return (
     <motion.h1
-      className="max-w-4xl font-Byomgraphy font-normal text-5xl tracking-wide sm:text-6xl lg:text-8xl"
+      className="max-w-4xl font-Byomgraphy font-normal text-6xl sm:text-7xl lg:text-8xl xl:text-9xl tracking-wide drop-shadow-lg drop-shadow-black"
       key={text}
     >
       {characters.map((char, i) => (
@@ -44,14 +46,19 @@ export const BlurInText = ({ text = "" }) => {
 };
 
 const SongTitle = ({ currentSong }) => {
+  const { isDesktop, isTablet } = useDeviceDetect();
+
   return (
     <div>
-      <div className="overflow-hidden py-8 px-3">
-        <BlurInText text={currentSong.title.as} />
-      </div>
+      <BlurInText text={currentSong.title.as} />
 
-      <div className="overflow-hidden px-3">
-        <SlideInText text={currentSong.title.eg} />
+      <div className="pb-5 md:pb-6 lg:pb-9 flex flex-wrap items-center gap-x-6">
+        <SlideInText
+          text={currentSong.title.eg}
+          className={`${isDesktop ? "text-3xl" : isTablet ? "text-2xl" : "text-lg"} `}
+        />
+
+        {/* <LikeButton /> */}
       </div>
     </div>
   );
