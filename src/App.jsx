@@ -5,6 +5,7 @@ import defaultBg from "./assets/bg/scene-wide-13.webp";
 import { useSelector } from "react-redux";
 import useDeviceDetect from "./hooks/useDeviceDetect";
 import { AnimatePresence, motion } from "framer-motion";
+import PWAInstall from "./shared/PWAInstall";
 
 const App = () => {
   const { playList, currentIndex } = useSelector((state) => state.player);
@@ -52,6 +53,8 @@ const App = () => {
       <section className="w-full h-max flex-1 flex flex-col justify-end min-h-0">
         <MusicPlayer />
       </section>
+
+      <PWAInstall/>
     </main>
   );
 };

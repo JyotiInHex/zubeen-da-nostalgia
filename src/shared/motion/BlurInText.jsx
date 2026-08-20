@@ -13,9 +13,11 @@ export const BlurInText = ({ text = "" }) => {
     (item) => item.segment,
   );
 
+  const { isDesktop, isTablet } = useDeviceDetect();
+
   return (
     <motion.h1
-      className="max-w-4xl font-Byomgraphy font-normal text-6xl sm:text-7xl lg:text-8xl xl:text-9xl tracking-wide drop-shadow-lg drop-shadow-black"
+      className={`max-w-4xl font-Byomgraphy font-normal tracking-wide drop-shadow-lg drop-shadow-black/85 ${isDesktop ? "text-8xl" : isTablet ? "text-6xl" : "text-5xl"}`}
       key={text}
     >
       {characters.map((char, i) => (
@@ -55,7 +57,7 @@ const SongTitle = ({ currentSong }) => {
       <div className="pb-5 md:pb-6 lg:pb-9 flex flex-wrap items-center gap-x-6">
         <SlideInText
           text={currentSong.title.eg}
-          className={`${isDesktop ? "text-3xl" : isTablet ? "text-2xl" : "text-lg"} `}
+          className={`${isDesktop ? "text-3xl" : isTablet ? "text-2xl" : "text-lg"}`}
         />
 
         {/* <LikeButton /> */}

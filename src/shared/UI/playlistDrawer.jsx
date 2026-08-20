@@ -3,7 +3,7 @@ import { setCurrentPlaylist } from "@/store/slices/playListSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { playLists } from "@/data/music-data";
 import { Playlist4, Soundwave, Vinyl2 } from "reicon-react";
-import { Button } from "@/components/ui/button";
+import useDeviceDetect from "@/hooks/useDeviceDetect";
 
 import {
   Drawer,
@@ -15,15 +15,27 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import SlideInText from "../motion/SlideInText";
-import useDeviceDetect from "@/hooks/useDeviceDetect";
 
-const PlaylistDrawer = ({ trigger }) => {
+const PlaylistDrawer = ({
+  trigger,
+  open: controlledOpen,
+  onOpenChange: controlledOnOpenChange,
+}) => {
   const dispatch = useDispatch();
 
   const { isMobile } = useDeviceDetect();
 
-  const [open, setOpen] = useState(false);
+  const [internalOpen, setInternalOpen] = useState(false);
+  const isControlled = controlledOpen !== undefined;
+  const open = isControlled ? controlledOpen : internalOpen;
+
+  const handleOpenChange = (value) => {
+    if (isControlled) {
+      controlledOnOpenChange?.(value);
+    } else {
+      setInternalOpen(value);
+    }
+  };
 
   const { currentPlaylistId, isPlaying } = useSelector((state) => state.player);
 
@@ -34,17 +46,18 @@ const PlaylistDrawer = ({ trigger }) => {
 
   return (
     <Drawer
-      key={isMobile ? "drawer-mobile" : "drawer-desktop"}
-      swipeDirection={isMobile ? "down" : "right"}
       open={open}
-      onOpenChange={setOpen}
+      onOpenChange={handleOpenChange}
+      swipeDirection={isMobile ? "down" : "right"}
     >
-      <DrawerTrigger asChild className="outline-0!">
-        {trigger}
-      </DrawerTrigger>
+      {trigger && (
+        <DrawerTrigger asChild className="outline-0!">
+          {trigger}
+        </DrawerTrigger>
+      )}
 
       <DrawerContent
-        className={`fixed z-50 overflow-hidden border border-white/10 bg-black/60 text-white shadow-2xl backdrop-blur-2xl outline-none transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] ${
+        className={`fixed z-50 overflow-hidden border border-white/10 bg-black/60 text-white shadow-2xl backdrop-blur-2xl outline-none transition-transform duration-500 ease-[cubic-bezier(0.32,0.72,0,1)] select-none! ${
           isMobile
             ? "inset-x-0 bottom-0 max-h-[85vh] rounded-t-[28px]"
             : "inset-y-4! right-4! left-auto top-4 bottom-4 h-[calc(100vh-32px)] w-105 max-w-[calc(100vw-32px)] rounded-[28px]!"
@@ -54,7 +67,7 @@ const PlaylistDrawer = ({ trigger }) => {
           <div className="mx-auto mt-3 h-1.5 w-12 rounded-full bg-white/20" />
         )}
 
-        <div className="flex h-full max-h-full flex-col min-h-0 overflow-hidden px-2">
+        <div className="flex h-full max-h-full flex-col min-h-0 overflow-hidden px-2 select-none!">
           <DrawerHeader className="px-6 pt-6 text-left select-none!">
             <DrawerTitle className="text-2xl font-bold font-Noto-Serif tracking-tight text-white">
               প্লেলিষ্ট
@@ -70,8 +83,7 @@ const PlaylistDrawer = ({ trigger }) => {
 
               return (
                 <div key={playList.id}>
-                  <Button
-                    variant="secondary"
+                  <button
                     type="button"
                     onClick={() => handlePlaylistChange(playList.id)}
                     className={`relative flex w-full h-fit items-center gap-4 rounded-2xl p-4 text-left transition-all hover:scale-96 overflow-hidden bg-linear-to-br ${isActive ? "from-amber-400 to-amber-600 text-black hover:bg-amber-300" : "bg-white/5 text-white hover:bg-white/10"}
@@ -116,7 +128,7 @@ const PlaylistDrawer = ({ trigger }) => {
                     >
                       {playList.tracks.length.toString().padStart(2, "0")}
                     </span>
-                  </Button>
+                  </button>
                 </div>
               );
             })}
@@ -124,13 +136,9 @@ const PlaylistDrawer = ({ trigger }) => {
 
           <DrawerFooter className={"flex flex-col gap-2.5 pt-5"}>
             <DrawerClose asChild>
-              <Button
-                variant="secondary"
-                type="button"
-                className="w-full rounded-xl bg-white/10 px-4 py-5 text-white text-lg font-Noto-Serif font-normal hover:bg-white/15 cursor-pointer"
-              >
+              <h3 className="w-full rounded-xl bg-white/10 px-4 py-2 text-white text-lg font-Noto-Serif font-normal hover:bg-white/15 cursor-pointer">
                 বন্ধ কৰা
-              </Button>
+              </h3>
             </DrawerClose>
           </DrawerFooter>
         </div>

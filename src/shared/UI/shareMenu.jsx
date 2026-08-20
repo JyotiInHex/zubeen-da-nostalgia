@@ -20,14 +20,29 @@ import {
 import { playLists } from "@/data/music-data";
 import useDeviceDetect from "@/hooks/useDeviceDetect";
 
-const ShareMenu = ({ trigger, className }) => {
-  const [open, setOpen] = useState(false);
+const ShareMenu = ({
+  trigger,
+  open: controlledOpen,
+  onOpenChange: controlledOnOpenChange,
+}) => {
   const [copied, setCopied] = useState(false);
   const [isBusy, setIsBusy] = useState(false);
 
   const isSharingRef = useRef(false);
 
-  const { isDesktop, isMobile, isTablet } = useDeviceDetect();
+  const { isDesktop, isMobile } = useDeviceDetect();
+
+  const [internalOpen, setInternalOpen] = useState(false);
+  const isControlled = controlledOpen !== undefined;
+  const open = isControlled ? controlledOpen : internalOpen;
+
+  const handleOpenChange = (value) => {
+    if (isControlled) {
+      controlledOnOpenChange?.(value);
+    } else {
+      setInternalOpen(value);
+    }
+  };
 
   const { playList, currentIndex, currentPlaylistId, isPlaying } = useSelector(
     (state) => state.player,
@@ -177,8 +192,12 @@ const ShareMenu = ({ trigger, className }) => {
   };
 
   return (
-    <DropdownMenu open={open} onOpenChange={setOpen} modal={false}>
-      <DropdownMenuTrigger asChild>{trigger}</DropdownMenuTrigger>
+    <DropdownMenu open={open} onOpenChange={handleOpenChange} modal={false}>
+      {trigger && (
+        <DropdownMenuTrigger asChild className="outline-0!">
+          {trigger}
+        </DropdownMenuTrigger>
+      )}
 
       <DropdownMenuContent
         sideOffset={10}

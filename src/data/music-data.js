@@ -335,6 +335,42 @@ const goldenCollection = [
     artist: "Zubeen Garg",
     artwork: sceneWide8,
   }),
+
+  track({
+    title: {
+      as: "ৰ'দ আজি কেনি পাওঁ",
+      eg: "Rod Aji Keni Pau",
+    },
+    album: {
+      as: "তুমি মোৰ মাথোঁ মোৰ",
+      eg: "Tumi Mur Mathu Mur",
+    },
+    year: {
+      as: "২০০০",
+      eg: "2000",
+    },
+    musicId: "PUeSiHxqEqg",
+    artist: "Zubeen Garg",
+    artwork: sceneWide3,
+  }),
+
+  track({
+    title: {
+      as: "কঁকাল খামুচীয়া",
+      eg: "Kokal Khamusia",
+    },
+    album: {
+      as: "শব্দ",
+      eg: "Sobdo",
+    },
+    year: {
+      as: "১৯৯৮",
+      eg: "1998",
+    },
+    musicId: "E8nFRftKow8",
+    artist: "Zubeen Garg",
+    artwork: sceneWide6,
+  }),
 ];
 
 const murPriyo = [

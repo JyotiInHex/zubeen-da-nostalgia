@@ -18,20 +18,34 @@ import {
   setCurrentPlaylist,
 } from "../../../store/slices/playListSlice";
 import useDeviceDetect from "@/hooks/useDeviceDetect";
-import { createShuffledQueue } from "@/lib/helper";
+import { createShuffledQueue } from "@/lib/helper/shuffle";
+import {
+  ClearMediaActions,
+  SetMediaAction,
+  SetMediaMetaData,
+  SetMediaPlaybackState,
+} from "@/lib/helper/mediaSession";
+import usePlayerProgress from "@/hooks/usePlayerProgress";
 
 const MusicPlayer = () => {
   const dispatch = useDispatch();
+  const { isDesktop, isMobile, isTablet } = useDeviceDetect();
 
   const playerRef = useRef(null);
-  const progressTimerRef = useRef(null);
+
+  const { start, stop } = usePlayerProgress({
+    playerRef,
+
+    onTimeUpdate: ({ time, duration }) => {
+      dispatch(setCurrentTime(time));
+      dispatch(setDuration(duration));
+    },
+  });
 
   const [isLiked, setIsLiked] = useState(false);
   const [isRepeat, setIsRepeat] = useState(false);
   const [isShuffle, setIsShuffle] = useState(false);
   const [shuffledQueue, setShuffledQueue] = useState([]);
-
-  const { isDesktop, isMobile, isTablet } = useDeviceDetect();
 
   const { playList, currentIndex, isPlaying, currentTime, duration } =
     useSelector((state) => state.player);
@@ -75,7 +89,7 @@ const MusicPlayer = () => {
     duration > 0 ? Math.min((currentTime / duration) * 100, 100) : 0;
 
   useEffect(() => {
-    return () => stopProgressTimer();
+    return () => stop();
   }, []);
 
   useEffect(() => {
@@ -158,26 +172,14 @@ const MusicPlayer = () => {
     }
   }, [isShuffle, playList?.length, currentIndex]);
 
-  const startProgressTimer = () => {
-    stopProgressTimer();
+  useEffect(() => {
+    if (!currentSong) return;
+    SetMediaMetaData(currentSong);
+  }, [currentSong]);
 
-    progressTimerRef.current = setInterval(() => {
-      if (!playerRef.current) return;
-
-      const time = playerRef.current.getCurrentTime();
-      const total = playerRef.current.getDuration();
-
-      dispatch(setCurrentTime(time || 0));
-      dispatch(setDuration(total || 0));
-    }, 250);
-  };
-
-  const stopProgressTimer = () => {
-    if (progressTimerRef.current) {
-      clearInterval(progressTimerRef.current);
-      progressTimerRef.current = null;
-    }
-  };
+  useEffect(() => {
+    SetMediaPlaybackState(isPlaying);
+  }, [isPlaying]);
 
   const handleReady = (event) => {
     playerRef.current = event.target;
@@ -194,16 +196,16 @@ const MusicPlayer = () => {
   const handleStateChange = (event) => {
     if (event.data === 1) {
       dispatch(setIsPlaying(true));
-      startProgressTimer();
+      start();
     }
 
     if (event.data === 2) {
       dispatch(setIsPlaying(false));
-      stopProgressTimer();
+      stop();
     }
 
     if (event.data === 0) {
-      stopProgressTimer();
+      stop();
 
       if (isRepeat) {
         if (playerRef.current) {
@@ -296,6 +298,46 @@ const MusicPlayer = () => {
       playerRef.current.seekTo(value, true);
     }
   };
+
+  useEffect(() => {
+    SetMediaAction("play", () => {
+      togglePlay();
+    });
+
+    SetMediaAction("pause", () => {
+      togglePlay();
+    });
+
+    SetMediaAction("nexttrack", () => {
+      handleNext();
+    });
+
+    SetMediaAction("previoustrack", () => {
+      handlePrevious();
+    });
+
+    SetMediaAction("seekbackward", (details) => {
+      if (!playerRef.current) return;
+
+      const offset = details.seekOffset || 10;
+
+      const newTime = Math.max(0, currentTime - offset);
+
+      playerRef.current.seekTo(newTime, true);
+    });
+
+    SetMediaAction("seekforward", (details) => {
+      if (!playerRef.current) return;
+
+      const offset = details.seekOffset || 10;
+
+      const newTime = Math.min(duration, currentTime + offset);
+
+      playerRef.current.seekTo(newTime, true);
+    });
+
+    return () => ClearMediaActions();
+  }, [currentTime, duration, togglePlay, handleNext, handlePrevious]);
 
   if (!currentSong) {
     return (
