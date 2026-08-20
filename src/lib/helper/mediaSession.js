@@ -21,7 +21,7 @@ export const SetMediaMetaData = (song) => {
           {
             src: artwork,
             sizes: "512x512",
-            type: "image/jpeg",
+            type: "image/webp",
           },
         ]
       : [],

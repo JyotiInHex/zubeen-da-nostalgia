@@ -1,14 +1,18 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import YouTube from "react-youtube";
+import { playLists } from "@/data/music-data";
 import { formatTime } from "@/lib/formater";
 import { useDispatch, useSelector } from "react-redux";
+import { createShuffledQueue } from "@/lib/helper/shuffle";
 
 import SlideInText from "@/shared/motion/SlideInText";
 import SongTitle from "@/shared/motion/BlurInText";
-import { playLists } from "@/data/music-data";
 import NextSong from "./next-song";
 import MusicControllers from "./controller";
 import AudioProgressBar from "./progressBar";
+import useDeviceDetect from "@/hooks/useDeviceDetect";
+import usePlayerProgress from "@/hooks/usePlayerProgress";
+
 
 import {
   setCurrentIndex,
@@ -17,15 +21,13 @@ import {
   setDuration,
   setCurrentPlaylist,
 } from "../../../store/slices/playListSlice";
-import useDeviceDetect from "@/hooks/useDeviceDetect";
-import { createShuffledQueue } from "@/lib/helper/shuffle";
+
 import {
   ClearMediaActions,
   SetMediaAction,
   SetMediaMetaData,
   SetMediaPlaybackState,
 } from "@/lib/helper/mediaSession";
-import usePlayerProgress from "@/hooks/usePlayerProgress";
 
 const MusicPlayer = () => {
   const dispatch = useDispatch();
@@ -371,7 +373,7 @@ const MusicPlayer = () => {
       </div>
 
       <div
-        className={`relative grid h-full pb-20 ${isDesktop ? "grid-cols-[1fr_40%]" : "grid-cols-1"}`}
+        className={`relative grid h-full ${isDesktop ? "grid-cols-[1fr_40%] pb-20" : "grid-cols-1"}`}
       >
         <div
           className={`relative z-10 flex min-h-130 flex-col p-6 sm:p-8 lg:p-10 ${isDesktop ? "mt-auto" : "justify-center"}`}

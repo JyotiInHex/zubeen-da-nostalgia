@@ -17,7 +17,7 @@ export const BlurInText = ({ text = "" }) => {
 
   return (
     <motion.h1
-      className={`max-w-4xl font-Byomgraphy font-normal tracking-wide drop-shadow-lg drop-shadow-black/85 ${isDesktop ? "text-8xl" : isTablet ? "text-6xl" : "text-5xl"}`}
+      className={`max-w-4xl font-Byomgraphy font-normal tracking-wide drop-shadow-lg drop-shadow-black/85 ${isDesktop ? "text-8xl" : isTablet ? "text-6xl" : "text-6xl"}`}
       key={text}
     >
       {characters.map((char, i) => (

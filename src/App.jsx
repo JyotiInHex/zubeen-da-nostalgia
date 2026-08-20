@@ -50,7 +50,7 @@ const App = () => {
 
       <Header />
 
-      <section className="w-full h-max flex-1 flex flex-col justify-end min-h-0">
+      <section className="w-full h-max flex-1 flex flex-col justify-end min-h-0 mt-auto">
         <MusicPlayer />
       </section>
 
