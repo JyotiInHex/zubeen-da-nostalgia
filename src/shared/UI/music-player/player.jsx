@@ -59,7 +59,7 @@ const MusicPlayer = () => {
       fs: 0,
       rel: 0,
       controls: 0,
-      autoplay:  0,
+      autoplay:  1,
       disablekb: 1,
       playsinline: 1,
     },
@@ -184,9 +184,7 @@ const MusicPlayer = () => {
 
   const handleReady = (event) => {
     playerRef.current = event.target;
-
     const total = event.target.getDuration();
-
     dispatch(setDuration(total || 0));
 
     if (isPlaying) {
