@@ -13,7 +13,6 @@ import AudioProgressBar from "./progressBar";
 import useDeviceDetect from "@/hooks/useDeviceDetect";
 import usePlayerProgress from "@/hooks/usePlayerProgress";
 
-
 import {
   setCurrentIndex,
   setIsPlaying,
@@ -217,11 +216,19 @@ const MusicPlayer = () => {
         return;
       }
 
-      if (playList.length <= 1 && currentIndex === playList.length - 1) {
-        dispatch(setCurrentTime(0));
-        dispatch(setIsPlaying(false));
+      if (playList.length === 1) {
+        if (playerRef.current) {
+          playerRef.current.seekTo(0, true);
+          playerRef.current.playVideo();
+        }
         return;
       }
+
+      // if (playList.length <= 1 && currentIndex === playList.length - 1) {
+      //   dispatch(setCurrentTime(0));
+      //   dispatch(setIsPlaying(false));
+      //   return;
+      // }
 
       handleNext();
     }
