@@ -452,7 +452,7 @@ const eucalyptus = [
   track({
     title: {
       as: "মুুক্তি",
-      eg: "Ahetuk",
+      eg: "Mukti",
     },
     album: {
       as: "মুুক্তি",
@@ -464,7 +464,7 @@ const eucalyptus = [
     },
     musicId: "vE6ohin1KBY",
     artist: "Zubeen Garg",
-    artwork: sceneWide15,
+    artwork: sceneWide18,
   }),
 ];
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
