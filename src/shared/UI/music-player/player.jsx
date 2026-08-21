@@ -59,7 +59,7 @@ const MusicPlayer = () => {
       fs: 0,
       rel: 0,
       controls: 0,
-      autoplay: isPlaying ? 1 : 0,
+      autoplay:  0,
       disablekb: 1,
       playsinline: 1,
     },
