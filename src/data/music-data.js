@@ -15,6 +15,7 @@ import sceneWide14 from "../assets/bg/scene-wide-14.webp";
 import sceneWide15 from "../assets/bg/scene-wide-15.webp";
 import sceneWide16 from "../assets/bg/scene-wide-16.webp";
 import sceneWide17 from "../assets/bg/scene-wide-17.webp";
+import sceneWide18 from "../assets/bg/scene-wide-18.webp";
 
 let trackNumber = 0;
 
@@ -446,6 +447,26 @@ const murPriyo = [
     artwork: sceneWide14,
   }),
 ];
+
+const eucalyptus = [
+  track({
+    title: {
+      as: "মুুক্তি",
+      eg: "Ahetuk",
+    },
+    album: {
+      as: "মুুক্তি",
+      eg: "Mukti",
+    },
+    year: {
+      as: "১৯৯৭",
+      eg: "1997",
+    },
+    musicId: "vE6ohin1KBY",
+    artist: "Zubeen Garg",
+    artwork: sceneWide15,
+  }),
+];
 // +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
 export const playLists = [
@@ -473,10 +494,10 @@ export const playLists = [
     year: "২০০২ – ২০২৬",
     tracks: murPriyo,
   },
-  // {
-  //   id: "eucalyptus",
-  //   name: "ইউকেলিপ্টাছ",
-  //   year: "২০০০ – ২০২৬",
-  //   tracks: goldenCollection,
-  // },
+  {
+    id: "eucalyptus",
+    name: "ইউকেলিপ্টাছ",
+    year: "২০০০ – ২০২৬",
+    tracks: eucalyptus,
+  },
 ];

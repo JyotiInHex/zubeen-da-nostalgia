@@ -59,7 +59,7 @@ const MusicPlayer = () => {
       fs: 0,
       rel: 0,
       controls: 0,
-      autoplay:  1,
+      autoplay: isPlaying ? 1 : 0,
       disablekb: 1,
       playsinline: 1,
     },
@@ -184,7 +184,9 @@ const MusicPlayer = () => {
 
   const handleReady = (event) => {
     playerRef.current = event.target;
+
     const total = event.target.getDuration();
+
     dispatch(setDuration(total || 0));
 
     if (isPlaying) {
@@ -214,19 +216,11 @@ const MusicPlayer = () => {
         return;
       }
 
-      if (playList.length === 1) {
-        if (playerRef.current) {
-          playerRef.current.seekTo(0, true);
-          playerRef.current.playVideo();
-        }
+      if (playList.length <= 1 && currentIndex === playList.length - 1) {
+        dispatch(setCurrentTime(0));
+        dispatch(setIsPlaying(false));
         return;
       }
-
-      // if (playList.length <= 1 && currentIndex === playList.length - 1) {
-      //   dispatch(setCurrentTime(0));
-      //   dispatch(setIsPlaying(false));
-      //   return;
-      // }
 
       handleNext();
     }
