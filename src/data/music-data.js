@@ -372,6 +372,114 @@ const goldenCollection = [
     artist: "Zubeen Garg",
     artwork: sceneWide6,
   }),
+
+  track({
+    title: {
+      as: "অচিনাকী দুটি মনে",
+      eg: "Osinaki Duti Mone",
+    },
+    album: {
+      as: "অধিনায়ক",
+      eg: "Adhinayak",
+    },
+    year: {
+      as: "২০০৬",
+      eg: "2006",
+    },
+    musicId: "3dkPq_hwxws",
+    artist: "Zubeen Garg",
+    artwork: sceneWide14,
+  }),
+
+  track({
+    title: {
+      as: "এচাতি প্ৰণয়ৰ বতাহে",
+      eg: "Asati Pronoyor Botahe",
+    },
+    album: {
+      as: "অগ্নিসাক্ষী",
+      eg: "Agnisakshi",
+    },
+    year: {
+      as: "২০০৩",
+      eg: "2003",
+    },
+    musicId: "U9uvnoV7VjU",
+    artist: "Zubeen Garg",
+    artwork: sceneWide13,
+  }),
+
+  track({
+    title: {
+      as: "এতিয়া এন্ধাৰে",
+      eg: "Aetia Endhare",
+    },
+    album: {
+      as: "গোল্ডেন সংগ্ৰহ, ৩",
+      eg: "Golden Collection, 3",
+    },
+    year: {
+      as: "১৯৯৪",
+      eg: "1994",
+    },
+    musicId: "tTPpsCUflOs",
+    artist: "Zubeen Garg",
+    artwork: sceneWide2,
+  }),
+
+  track({
+    title: {
+      as: "অলপ শান্তি দিয়া",
+      eg: "Alop Hanti Diya",
+    },
+    album: {
+      as: "আকৌ হিয়ামন",
+      eg: "Akou Hiyamon",
+    },
+    year: {
+      as: "২০০২",
+      eg: "2002",
+    },
+    musicId: "onCSzR_hDRk",
+    artist: "Zubeen Garg",
+    artwork: sceneWide8,
+  }),
+
+  track({
+    title: {
+      as: "অবুজন মন",
+      eg: "Abujon Mon",
+    },
+    album: {
+      as: "অবুজন মন",
+      eg: "Abujon Mon",
+    },
+    year: {
+      as: "২০১৮",
+      eg: "2018",
+    },
+    musicId: "IL5XOMr1d5Y",
+    artist: "Zubeen Garg",
+    artwork: sceneWide3,
+  }),
+
+  track({
+    title: {
+      as: "ৰুমাল",
+      eg: "Rumal",
+    },
+    album: {
+      as: "ৰুমাল",
+      eg: "Rumaal",
+    },
+    year: {
+      as: "২০০৮",
+      eg: "2008",
+    },
+    musicId: "dVJkZsHUekI",
+    artist: "Zubeen Garg",
+    artwork: sceneWide3,
+  }),
 ];
 
 const murPriyo = [
