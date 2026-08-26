@@ -554,6 +554,24 @@ const murPriyo = [
     artist: "Zubeen Garg",
     artwork: sceneWide14,
   }),
+
+  track({
+    title: {
+      as: "তুমি চোৱা যেতিয়া",
+      eg: "Tumi suwa jetiya",
+    },
+    album: {
+      as: "মেঘৰ বৰন",
+      eg: "Meghor Boron,",
+    },
+    year: {
+      as: "১৯৯৯",
+      eg: "1999",
+    },
+    musicId: "DpCQ5XPdXKY",
+    artist: "Zubeen Garg",
+    artwork: sceneWide1,
+  }),
 ];
 
 const eucalyptus = [
