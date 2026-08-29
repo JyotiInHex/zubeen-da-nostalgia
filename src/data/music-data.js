@@ -47,24 +47,6 @@ const track = ({
 const goldenNights = [
   track({
     title: {
-      as: "অ’ মোৰ ৰণৰ তেজী ঘোঁৰা",
-      eg: "O Mur Ronor Tejighura",
-    },
-    album: {
-      as: "বৰষুণ",
-      eg: "Borokhun",
-    },
-    year: {
-      as: "২০১৮",
-      eg: "2018",
-    },
-    musicId: "OtJ6Vmd3LLc",
-    artist: "Zubeen Garg",
-    artwork: sceneWide1,
-  }),
-
-  track({
-    title: {
       as: "নীলিম আকাশ",
       eg: "Nilim Aakash",
     },
@@ -97,6 +79,42 @@ const goldenNights = [
     musicId: "JKT7-G1l-SA",
     artist: "Zubeen Garg",
     artwork: sceneWide9,
+  }),
+
+  track({
+    title: {
+      as: "নিতাল নিশা",
+      eg: "Nital Nixha",
+    },
+    album: {
+      as: "সন্ধ্যা",
+      eg: "Sandhya ",
+    },
+    year: {
+      as: "২০০৬",
+      eg: "2006",
+    },
+    musicId: "JKT7-G1l-SA",
+    artist: "Zubeen Garg",
+    artwork: sceneWide9,
+  }),
+
+  track({
+    title: {
+      as: "অ’ মোৰ ৰণৰ তেজী ঘোঁৰা",
+      eg: "O Mur Ronor Tejighura",
+    },
+    album: {
+      as: "বৰষুণ",
+      eg: "Borokhun",
+    },
+    year: {
+      as: "২০১৮",
+      eg: "2018",
+    },
+    musicId: "OtJ6Vmd3LLc",
+    artist: "Zubeen Garg",
+    artwork: sceneWide1,
   }),
 
   track({
@@ -562,13 +580,31 @@ const murPriyo = [
     },
     album: {
       as: "মেঘৰ বৰন",
-      eg: "Meghor Boron,",
+      eg: "Meghor Boron",
     },
     year: {
       as: "১৯৯৯",
       eg: "1999",
     },
     musicId: "DpCQ5XPdXKY",
+    artist: "Zubeen Garg",
+    artwork: sceneWide1,
+  }),
+
+  track({
+    title: {
+      as: "বিভাবোৰীয়া আমাৰ মিলনৰ",
+      eg: "Bibhaboriya Amar Milonor",
+    },
+    album: {
+      as: "জীৱন নদীৰ দুটি পাৰ",
+      eg: "Jibon Nodir Duti Paar",
+    },
+    year: {
+      as: "২০০২",
+      eg: "2002",
+    },
+    musicId: "GwfKjkSz9zM",
     artist: "Zubeen Garg",
     artwork: sceneWide1,
   }),
