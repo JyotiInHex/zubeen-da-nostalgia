@@ -16,6 +16,7 @@ import sceneWide15 from "../assets/bg/scene-wide-15.webp";
 import sceneWide16 from "../assets/bg/scene-wide-16.webp";
 import sceneWide17 from "../assets/bg/scene-wide-17.webp";
 import sceneWide18 from "../assets/bg/scene-wide-18.webp";
+import sceneWide19 from "../assets/bg/scene-wide-19.webp";
 
 let trackNumber = 0;
 
@@ -70,7 +71,7 @@ const goldenNights = [
     },
     album: {
       as: "সন্ধ্যা",
-      eg: "Sandhya ",
+      eg: "Sandhya",
     },
     year: {
       as: "২০০৬",
@@ -83,20 +84,20 @@ const goldenNights = [
 
   track({
     title: {
-      as: "নিতাল নিশা",
-      eg: "Nital Nixha",
+      as: "সময়ে যেন",
+      eg: "Xomoyo Jen",
     },
     album: {
-      as: "সন্ধ্যা",
-      eg: "Sandhya ",
+      as: "মোৰ সুৰীয়া গীত",
+      eg: "Mur Xuria Geet",
     },
     year: {
-      as: "২০০৬",
-      eg: "2006",
+      as: "১৯৯৩",
+      eg: "1993",
     },
-    musicId: "JKT7-G1l-SA",
+    musicId: "NeEp9b23LWg",
     artist: "Zubeen Garg",
-    artwork: sceneWide9,
+    artwork: sceneWide7,
   }),
 
   track({
@@ -498,6 +499,42 @@ const goldenCollection = [
     artist: "Zubeen Garg",
     artwork: sceneWide3,
   }),
+
+  track({
+    title: {
+      as: "আঊসিৰ জোন মোৰ",
+      eg: "AUKHIR JUN MUR",
+    },
+    album: {
+      as: "শিশু",
+      eg: "Shishu",
+    },
+    year: {
+      as: "২০০২",
+      eg: "2002",
+    },
+    musicId: "HHtlKR0wVLE",
+    artist: "JONKEY BORTHAKUR",
+    artwork: sceneWide19,
+  }),
+
+  track({
+    title: {
+      as: "মুগ্ধ হিয়া মোৰ",
+      eg: "Mugdho Hiya Mur",
+    },
+    album: {
+      as: "শিশু",
+      eg: "Shishu",
+    },
+    year: {
+      as: "২০০২",
+      eg: "2002",
+    },
+    musicId: "iNnXEsOziec",
+    artist: "Zubeen Garg",
+    artwork: sceneWide8,
+  }),
 ];
 
 const murPriyo = [
@@ -606,7 +643,7 @@ const murPriyo = [
     },
     musicId: "GwfKjkSz9zM",
     artist: "Zubeen Garg",
-    artwork: sceneWide1,
+    artwork: sceneWide3,
   }),
 ];
 
