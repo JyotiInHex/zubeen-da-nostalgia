@@ -1,16 +1,71 @@
-# React + Vite
+# Zubeen Da Nostalgia
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A creative digital experience celebrating Assamese music, memories and the cultural legacy of Zubeen Garg.
 
-Currently, two official plugins are available:
+This project combines web development, visual storytelling and music-focused design to create an immersive experience.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## About the Project
 
-## React Compiler
+The project is an independent creative tribute built to explore how technology and design can preserve and present cultural memories.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Features
 
-## Expanding the ESLint configuration
+- Music-focused interactive experience
+- Custom visual interface
+- Responsive web layout
+- Assamese typography and font support
+- Custom visual assets
+- Animated interactions
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Technology Stack
+
+- React
+- Vite
+- JavaScript
+- CSS
+- Custom typography and visual assets
+
+## Getting Started
+
+### Requirements
+- Node.js
+- npm
+
+### Installation
+
+```bash
+git clone https://github.com/JyotiInHex/zubeen-da-nostalgia.git
+cd zubeen-da-nostalgia
+npm install
+npm run dev
+```
+
+### Build
+
+```bash
+npm run build
+npm run preview
+```
+
+## Project Structure
+
+```text
+zubeen-da-nostalgia/
+├── public/
+├── src/
+├── index.html
+├── package.json
+└── README.md
+```
+
+## Credits and Attribution
+
+This is an independent fan-made tribute.
+
+All music, photographs, trademarks and third-party assets remain the property of their respective owners. Proper attribution and permissions should be provided for assets used in the project.
+
+This project is not officially affiliated with or endorsed by the artist or their representatives.
+
+## License
+
+No license is currently declared. Third-party media rights remain with their respective owners.
